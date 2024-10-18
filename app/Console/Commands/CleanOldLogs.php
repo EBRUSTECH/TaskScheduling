@@ -26,7 +26,8 @@ class CleanOldLogs extends Command
      */
     public function handle()
     {
-        Apilog::where('created_at', '<', now()->subDays(30))->delete();
-        $this->info('Old API logs deleted successfully.');
+        $deletedCount = Apilog::where('created_at', '<', now()->subDays(30))->forceDelete();
+
+        $this->info("Old API logs deleted successfully: {$deletedCount} log(s) deleted.");
     }
 }
